@@ -75,8 +75,8 @@ def _setup_rule(hass: HomeAssistant, data: dict) -> dict:
                 "timestamp": dt_util.utcnow().isoformat(),
             }
 
-        async def send():
-            await async_send_webhook(hass, data, payload)
+        async def send(rule_payload):
+            await async_send_webhook(hass, data, rule_payload)
 
         await rate_limiter.trigger(payload, send)
 
