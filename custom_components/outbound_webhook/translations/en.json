@@ -1,63 +1,51 @@
 {
   "config": {
-    "step": {
-      "user": {
-        "title": "Add Outbound Webhook Rule",
-        "description": "Configure a new outbound webhook rule to trigger on entity or attribute changes."
-      },
-      "options": {
-        "title": "Edit Outbound Webhook Rule",
-        "description": "Update the settings for your outbound webhook rule."
-      }
-    },
-    "field": {
-      "name": {
-        "name": "Name"
-      },
-      "entity_id": {
-        "name": "Entity"
-      },
-      "trigger_type": {
-        "name": "Watch",
-        "options": {
-          "state": "State Change",
-          "attribute": "Attribute Change"
-        }
-      },
-      "attribute": {
-        "name": "Attribute"
-      },
-      "webhook_url": {
-        "name": "Webhook URL"
-      },
-      "http_method": {
-        "name": "HTTP Method",
-        "options": {
-          "POST": "POST",
-          "GET": "GET",
-          "PUT": "PUT",
-          "DELETE": "DELETE"
-        }
-      },
-      "rate_limit_mode": {
-        "name": "Rate Limit Mode",
-        "options": {
-          "none": "None",
-          "throttle": "Throttle (send first, then suppress)",
-          "debounce": "Debounce (wait for stability)"
-        }
-      },
-      "rate_limit_interval": {
-        "name": "Rate Limit Interval (ms)"
-      },
-      "enabled": {
-        "name": "Enabled"
-      }
+    "step": {},
+    "abort": {
+      "single_instance_allowed": "Already configured. Only a single Outbound Webhook hub is allowed; add rules inside it."
     }
   },
-  "error": {
-    "cannot_connect": "Cannot connect to the webhook endpoint.",
-    "invalid_url": "Invalid webhook URL.",
-    "invalid_interval": "Invalid rate limit interval."
+  "config_subentries": {
+    "rule": {
+      "title": "Outbound Webhook Rule",
+      "entry_type": "Webhook rule",
+      "initiate_flow": {
+        "user": "Add webhook rule",
+        "reconfigure": "Reconfigure webhook rule"
+      },
+      "step": {
+        "user": {
+          "title": "Add Outbound Webhook Rule",
+          "description": "Configure a new outbound webhook rule to trigger on entity or attribute changes.",
+          "data": {
+            "name": "Name",
+            "entity_id": "Entity",
+            "trigger_type": "Watch",
+            "attribute": "Attribute",
+            "webhook_url": "Webhook URL",
+            "http_method": "HTTP Method",
+            "rate_limit_mode": "Rate Limit Mode",
+            "rate_limit_interval": "Rate Limit Interval (ms)"
+          }
+        },
+        "reconfigure": {
+          "title": "Edit Outbound Webhook Rule",
+          "description": "Update the settings for this webhook rule.",
+          "data": {
+            "name": "Name",
+            "entity_id": "Entity",
+            "trigger_type": "Watch",
+            "attribute": "Attribute",
+            "webhook_url": "Webhook URL",
+            "http_method": "HTTP Method",
+            "rate_limit_mode": "Rate Limit Mode",
+            "rate_limit_interval": "Rate Limit Interval (ms)"
+          }
+        }
+      },
+      "error": {
+        "attribute_required": "Attribute is required when watching an attribute change."
+      }
+    }
   }
 }

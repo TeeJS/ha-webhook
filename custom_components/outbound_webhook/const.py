@@ -2,6 +2,9 @@
 
 DOMAIN = "outbound_webhook"
 
+# Subentry types
+SUBENTRY_TYPE_RULE = "rule"
+
 # Trigger types
 TRIGGER_TYPE_STATE = "state"
 TRIGGER_TYPE_ATTRIBUTE = "attribute"
