@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import time
 from homeassistant.helpers import event as async_event
@@ -34,7 +33,7 @@ class RateLimiter:
             def _fire(_):
                 self._debounce_timer = None
                 p = self._latest_payload
-                asyncio.create_task(callback(p))
+                self.hass.async_create_task(callback(p))
 
             self._debounce_timer = async_event.async_call_later(
                 self.hass, self.interval, _fire

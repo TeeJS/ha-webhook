@@ -1,10 +1,11 @@
 {
   "domain": "outbound_webhook",
   "name": "Outbound Webhook",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "single_config_entry": true,
   "description": "Send outbound HTTP webhooks from Home Assistant based on entity/state triggers with built-in rate limiting.",
-  "documentation": "https://github.com/TeeJS/ha-webhooks",
+  "documentation": "https://github.com/TeeJS/ha-webhook",
+  "issue_tracker": "https://github.com/TeeJS/ha-webhook/issues",
   "codeowners": ["@TeeJS"],
   "iot_class": "cloud_push",
   "config_flow": true

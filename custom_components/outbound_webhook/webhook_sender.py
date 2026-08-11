@@ -1,6 +1,6 @@
 import logging
 from aiohttp import ClientError, ClientResponseError, ClientConnectorError, ClientTimeout
-from homeassistant.util import dt as dt_util
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ async def async_send_webhook(hass, config, payload):
     _LOGGER.debug("Sending %s to %s with headers %s", method, url, safe_headers)
 
     try:
-        session = hass.async_clientsession()
+        session = async_get_clientsession(hass)
         timeout = ClientTimeout(total=DEFAULT_TIMEOUT)
 
         async with session.request(
