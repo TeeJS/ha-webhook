@@ -20,7 +20,9 @@ BASE_SCHEMA = vol.Schema({
         )
     ),
     vol.Optional(CONF_ATTRIBUTE): str,
-    vol.Required(CONF_WEBHOOK_URL): selector.UrlSelector(),
+    vol.Required(CONF_WEBHOOK_URL): selector.TextSelector(
+        selector.TextSelectorConfig(type=selector.TextSelectorType.URL)
+    ),
     vol.Required(CONF_HTTP_METHOD, default=HTTP_METHOD_POST): selector.SelectSelector(
         selector.SelectSelectorConfig(
             options=["POST", "GET", "PUT", "DELETE"]
