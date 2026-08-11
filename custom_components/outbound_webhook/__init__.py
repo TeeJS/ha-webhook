@@ -1,5 +1,6 @@
 import logging
 from homeassistant.core import HomeAssistant
+from . import config_flow  # noqa: F401
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.util import dt as dt_util
