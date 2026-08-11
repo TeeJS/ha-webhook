@@ -32,7 +32,7 @@ BASE_SCHEMA = vol.Schema({
         )
     ),
     vol.Required(CONF_RATE_LIMIT_INTERVAL, default=500): selector.NumberSelector(
-        selector.NumberSelectorConfig(min=0, max=30000, unit_of_measurement="ms", mode=selector.NumberBoxSelectorMode.BOX)
+        selector.NumberSelectorConfig(min=0, max=30000, unit_of_measurement="ms", mode=selector.NumberSelectorMode.BOX)
     ),
 })
 
