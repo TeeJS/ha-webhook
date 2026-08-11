@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# IDEs
+.vscode/
+.idea/
+
+# Home Assistant
+.HA_VSCODE_CREDENTIALS
+home-assistant.log
+
+# OS
+.DS_Store
+Thumbs.db
