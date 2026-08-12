@@ -4,7 +4,7 @@
 
 A Home Assistant custom integration that sends outbound HTTP webhooks when entity states or attributes change. Configured entirely through the UI — no `configuration.yaml` required.
 
-Built to bridge Home Assistant with automation platforms like [n8n](https://n8n.io) without needing Node-RED or YAML-based `rest_command` entries.
+Built to bridge Home Assistant with automation platforms like [n8n](https://github.com/n8n-io/n8n) without needing Node-RED or YAML-based `rest_command` entries.
 
 <br clear="left">
 
