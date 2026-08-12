@@ -1,6 +1,6 @@
 # Outbound Webhook for Home Assistant
 
-<img src="custom_components/outbound_webhook/brand/icon.png" alt="Outbound Webhook" width="110" align="left">
+<img src="custom_components/outbound_webhook/brand/icon.png?v=2" alt="Outbound Webhook" width="110" align="left">
 
 A Home Assistant custom integration that sends outbound HTTP webhooks when entity states or attributes change. Configured entirely through the UI — no `configuration.yaml` required.
 
