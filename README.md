@@ -1,12 +1,13 @@
-<p align="center">
-  <img src="custom_components/outbound_webhook/brand/icon.png" alt="Outbound Webhook" width="128">
-</p>
-
 # Outbound Webhook for Home Assistant
+
+<img src="custom_components/outbound_webhook/brand/icon.png" alt="Outbound Webhook" width="110" align="left">
 
 A Home Assistant custom integration that sends outbound HTTP webhooks when entity states or attributes change. Configured entirely through the UI — no `configuration.yaml` required.
 
 Built to bridge Home Assistant with automation platforms like [n8n](https://n8n.io) without needing Node-RED or YAML-based `rest_command` entries.
+
+<br clear="left">
+
 
 ## Features
 
