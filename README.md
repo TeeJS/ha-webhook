@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="custom_components/outbound_webhook/brand/icon.png" alt="Outbound Webhook" width="128">
+</p>
+
 # Outbound Webhook for Home Assistant
 
 A Home Assistant custom integration that sends outbound HTTP webhooks when entity states or attributes change. Configured entirely through the UI — no `configuration.yaml` required.
@@ -9,7 +13,7 @@ Built to bridge Home Assistant with automation platforms like [n8n](https://n8n.
 - **UI-only setup** — configure everything through Settings > Devices & Services
 - **Entity triggers** — watch for state changes or specific attribute changes (brightness, volume, temperature, etc.)
 - **Rate limiting** — throttle or debounce rapidly changing entities to avoid flooding your webhook endpoint
-- **Multiple rules** — each webhook rule is independent with its own entity, URL, and rate-limit settings
+- **Multiple rules** — one integration hub holds any number of independent rules, each with its own entity, URL, and rate-limit settings
 - **Async HTTP** — non-blocking requests that won't stall Home Assistant
 - **Secure by default** — sensitive headers and URL parameters are redacted from logs and diagnostics
 
@@ -31,7 +35,10 @@ Built to bridge Home Assistant with automation platforms like [n8n](https://n8n.
 
 ## Configuration
 
-When adding the integration, you'll be prompted to create a webhook rule:
+1. Go to **Settings > Devices & Services > Add Integration** and add **Outbound Webhook**. This creates a single hub — there's nothing to fill in.
+2. Open the hub and click **Add webhook rule**. Repeat for as many rules as you need; each one is independent and can be edited or removed on its own.
+
+Each rule has these fields:
 
 | Field | Description |
 |---|---|
@@ -39,34 +46,44 @@ When adding the integration, you'll be prompted to create a webhook rule:
 | **Entity** | The Home Assistant entity to watch |
 | **Watch** | `State Change` or `Attribute Change` |
 | **Attribute** | Attribute name (required if watching attributes, e.g. `brightness`) |
-| **Webhook URL** | The HTTPS endpoint to send POST requests to |
+| **Webhook URL** | The HTTPS endpoint to send requests to |
 | **HTTP Method** | `POST`, `GET`, `PUT`, or `DELETE` |
-| **Rate Limit Mode** | `None`, `Throttle`, or `Debounce` |
-| **Rate Limit Interval** | Interval in milliseconds |
-
-You can create multiple rules by adding the integration multiple times.
+| **Rate Limit Mode** | `None`, `Throttle`, or `Debounce` (see below) |
+| **Rate Limit Interval** | The time window in milliseconds used by Throttle and Debounce |
 
 ## Rate Limiting
 
+Some entities change rapidly — a dimmer sliding, a power meter updating every second. Rate limiting stops a burst of changes from flooding your endpoint. Every rule has a **Mode** and an **Interval** (in milliseconds). The interval is only used by Throttle and Debounce.
+
+### None
+
+Send a webhook for **every** qualifying change. No limiting. Best for entities that change infrequently, like a door sensor or an on/off switch.
+
 ### Throttle
-Sends the first qualifying event, then suppresses further events until the interval expires. Good for periodic sensor updates.
+
+Send the **first** change immediately, then **ignore** further changes until the interval elapses — at most one webhook per interval. Best when you want an instant response but need to cap how often it fires.
 
 ```
-0 ms     -> SEND
-100 ms   -> DROP
-250 ms   -> DROP
-1000 ms  -> SEND
+Interval = 500 ms
+  0 ms    change  ->  SEND
+  100 ms  change  ->  drop
+  250 ms  change  ->  drop
+  500 ms  change  ->  SEND   (interval elapsed, allowed again)
 ```
 
 ### Debounce
-Waits until changes stop for the configured interval, then sends only the most recent value. Ideal for sliders (brightness, volume).
+
+Wait until changes **stop** for the full interval, then send **only the most recent** value. Nothing is sent while changes keep arriving. Best for values that slide and then settle — brightness, volume, a temperature setpoint.
 
 ```
-0 ms     -> event
-100 ms   -> event
-250 ms   -> event
-900 ms   -> SEND latest value
+Interval = 500 ms
+  0 ms    change
+  100 ms  change
+  250 ms  change
+  750 ms          ->  SEND latest value   (500 ms of quiet)
 ```
+
+**Rule of thumb:** on/off entities → **None**. Sliders that settle on a final value → **Debounce**. High-frequency sensors where you want steady, capped updates → **Throttle**.
 
 ## Payload Format
 
